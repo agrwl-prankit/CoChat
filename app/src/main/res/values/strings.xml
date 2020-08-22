@@ -5,4 +5,13 @@
     <string name="contacts_fragment">Contacts Fragment</string>
     <string name="groups_fragment">Groups Fragment</string>
     <string name="chats_fragment">Chats Fragment</string>
+    <string name="email">Email...</string>
+    <string name="passsword">Passsword...</string>
+    <string name="login">Login</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="need_new_account">Need new Account</string>
+    <string name="or_login_using_your">Or Login using your</string>
+    <string name="phone">Phone</string>
+    <string name="already_have_account">Already have Account ?</string>
+    <string name="create_account">Create Account</string>
 </resources>
