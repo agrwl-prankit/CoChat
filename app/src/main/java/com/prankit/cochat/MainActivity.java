@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private TabsAccessAdapter tabsAccessAdapter;
     private FirebaseUser currentUser;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("CoChat");
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
         viewPager = (ViewPager) findViewById(R.id.main_tabs_pager);
         tabsAccessAdapter = new TabsAccessAdapter(getSupportFragmentManager());
         viewPager.setAdapter(tabsAccessAdapter);

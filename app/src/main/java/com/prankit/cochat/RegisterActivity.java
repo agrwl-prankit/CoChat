@@ -74,14 +74,13 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(RegisterActivity.this, "Account created successfully...", Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
                                 sendUserToLoginActivity();
                             }
                             else{
                                 String messageError = task.getException().toString();
                                 Toast.makeText(RegisterActivity.this,"Error : " + messageError , Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
                             }
+                            loadingBar.dismiss();
                         }
                     });
         }
