@@ -1,9 +1,13 @@
 package com.prankit.cochat;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
@@ -49,5 +53,28 @@ public class MainActivity extends AppCompatActivity {
     private void sendUserToLoginActivity() {
         Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(loginIntent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.optionmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.logoutOption){
+            firebaseAuth.signOut();
+            sendUserToLoginActivity();
+        }
+        if (item.getItemId() == R.id.settingsOption){
+
+        }
+        if (item.getItemId() == R.id.findFriendOption){
+
+        }
+        return true;
     }
 }
