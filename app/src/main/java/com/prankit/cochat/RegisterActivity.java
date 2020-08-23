@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -24,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView alreadyHaveAccountTextView;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog loadingBar;
+    private DatabaseReference dbReferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        dbReferences = FirebaseDatabase.getInstance().getReference();
         loadingBar = new ProgressDialog(this);
         createAccountButton = (Button) findViewById(R.id.registerButton);
         emailEditText = (EditText) findViewById(R.id.registerEmailEditText);
@@ -73,10 +77,12 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                String currentUserId = firebaseAuth.getCurrentUser().getUid();
+                                dbReferences.child("Users").child(currentUserId).setValue("");
                                 Toast.makeText(RegisterActivity.this, "Account created successfully...", Toast.LENGTH_SHORT).show();
-                                sendUserToLoginActivity();
+                                sendUserToMainActivity();
                             }
-                            else{
+                            else {
                                 String messageError = task.getException().toString();
                                 Toast.makeText(RegisterActivity.this,"Error : " + messageError , Toast.LENGTH_SHORT).show();
                             }
@@ -89,5 +95,13 @@ public class RegisterActivity extends AppCompatActivity {
     public void sendUserToLoginActivity(){
         Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(loginIntent);
+        finish();
+    }
+
+    public void sendUserToMainActivity(){
+        Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+        finish();
     }
 }
