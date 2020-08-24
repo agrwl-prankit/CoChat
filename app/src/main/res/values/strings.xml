@@ -14,4 +14,7 @@
     <string name="phone">Phone</string>
     <string name="already_have_account">Already have Account ?</string>
     <string name="create_account">Create Account</string>
+    <string name="username">username</string>
+    <string name="status">status...</string>
+    <string name="update">Update</string>
 </resources>

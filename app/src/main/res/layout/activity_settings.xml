@@ -6,10 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        app:civ_border_width="5dp"
+        app:civ_border_color="@color/colorPrimary"/>
+
     <EditText
         android:id="@+id/setUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/profileImage"
         android:inputType="textMultiLine"
         android:hint="@string/username"
         android:textAlignment="center"
@@ -29,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/setUserName"
         android:inputType="textMultiLine"
-        android:hint="status..."
+        android:hint="@string/status"
         android:textAlignment="center"
         android:gravity="center_horizontal"
         android:textColor="@color/colorPrimaryDark"
@@ -48,7 +59,7 @@
         android:layout_below="@id/setStatus"
         android:textColor="@android:color/background_light"
         android:background="@color/colorPrimaryDark"
-        android:text="Update"
+        android:text="@string/update"
         android:textAllCaps="false"
         android:textAlignment="center"
         android:gravity="center_horizontal"
