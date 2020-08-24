@@ -22,7 +22,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private FirebaseUser currentUser;
     private Button loginButton, phoneLoginButton;
     private EditText emailEditText, passwordEditText;
     private TextView needNewAccountTextView, forgetPasswordTextView;
@@ -35,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
         loadingBar = new ProgressDialog(this);
         loginButton = (Button) findViewById(R.id.loginButton);
         phoneLoginButton = (Button) findViewById(R.id.phoneLoginButton);
@@ -92,17 +90,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (currentUser != null){
-            sendUserToMainActivity();
-        }
-    }
-
     public void sendUserToMainActivity(){
         Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
+        finish();
     }
 
     public void sendUserToRegisterActivity(){

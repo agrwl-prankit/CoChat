@@ -47,12 +47,14 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         if (currentUser == null){
             sendUserToLoginActivity();
+            finish();
         }
     }
 
     private void sendUserToLoginActivity() {
         Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(loginIntent);
+        finish();
     }
 
     @Override
