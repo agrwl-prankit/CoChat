@@ -14,7 +14,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         app:civ_border_width="5dp"
-        app:civ_border_color="@color/colorPrimary"/>
+        android:src="@drawable/profileimage"
+        app:civ_border_color="@color/colorPrimaryDark"/>
 
     <EditText
         android:id="@+id/setUserName"
@@ -31,7 +32,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:padding="6dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:autofillHints="" />
 
     <EditText

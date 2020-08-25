@@ -33,15 +33,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // initialize fields and instances
         firebaseAuth = FirebaseAuth.getInstance();
         loadingBar = new ProgressDialog(this);
-        loginButton = (Button) findViewById(R.id.loginButton);
-        phoneLoginButton = (Button) findViewById(R.id.phoneLoginButton);
-        emailEditText = (EditText) findViewById(R.id.loginEmailEditText);
-        passwordEditText = (EditText) findViewById(R.id.loginPasswordEditText);
-        needNewAccountTextView = (TextView) findViewById(R.id.needNewAccountTextView);
-        forgetPasswordTextView= (TextView) findViewById(R.id.forgetPasswordTextView);
+        loginButton = findViewById(R.id.loginButton);
+        phoneLoginButton = findViewById(R.id.phoneLoginButton);
+        emailEditText = findViewById(R.id.loginEmailEditText);
+        passwordEditText = findViewById(R.id.loginPasswordEditText);
+        needNewAccountTextView = findViewById(R.id.needNewAccountTextView);
+        forgetPasswordTextView= findViewById(R.id.forgetPasswordTextView);
 
+        // when needNewAccount text is clicked
         needNewAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // when user will click login button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,19 +63,19 @@ public class LoginActivity extends AppCompatActivity {
     public void allowUserToLogin(){
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-
-        if (TextUtils.isEmpty(email))
+        //  check whether users enters email and password or not
+        if (email.equals(""))
             Toast.makeText(this, "Please enter email...", Toast.LENGTH_SHORT).show();
-
-        if (TextUtils.isEmpty(password))
+        else if (password.equals(""))
             Toast.makeText(this, "Please enter password...", Toast.LENGTH_SHORT).show();
-
+        //  if both have entered
         else {
+            //  add loading bar to indicate the user
             loadingBar.setTitle("SignIn");
             loadingBar.setMessage("Please wait...");
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
-
+            //  send email and password to firebase for sign in
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -90,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //  send user to main activity
     public void sendUserToMainActivity(){
         Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -97,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+    // send user to register activity for sign up
     public void sendUserToRegisterActivity(){
         Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registerIntent);
