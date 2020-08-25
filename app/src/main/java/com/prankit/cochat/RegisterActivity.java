@@ -1,6 +1,7 @@
 package com.prankit.cochat;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -87,8 +88,12 @@ public class RegisterActivity extends AppCompatActivity {
                                 sendUserToMainActivity();
                             }
                             else {
-                                String messageError = task.getException().toString();
-                                Toast.makeText(RegisterActivity.this,"Error : " + messageError , Toast.LENGTH_SHORT).show();
+                                new AlertDialog.Builder(RegisterActivity.this)
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .setTitle("Failed to create user")
+                                        .setMessage(task.getException().getMessage())
+                                        .setPositiveButton("Ok", null)
+                                        .show();
                             }
                             loadingBar.dismiss();
                         }

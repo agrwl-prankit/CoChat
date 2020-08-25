@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
+    private Toolbar mainToolbar;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private TabsAccessAdapter tabsAccessAdapter;
@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // add toolBar to screen
-        toolbar = findViewById(R.id.toolBar);
-        setSupportActionBar(toolbar);
+        mainToolbar = findViewById(R.id.mainToolBar);
+        setSupportActionBar(mainToolbar);
         getSupportActionBar().setTitle("CoChat");
 
         // initialize all fields and instances
@@ -73,10 +73,7 @@ public class MainActivity extends AppCompatActivity {
         dbReference.child("Users").child(currentUserId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("name").exists()){       // check whether the name exists or not
-                    Toast.makeText(MainActivity.this, "Welcome!", Toast.LENGTH_SHORT).show();
-                }
-                else {      // if not then send user to settingsActivity to update profile
+                if (!snapshot.child("name").exists()){       // check whether the name exists or not
                     sendUserToSettingsActivity();
                 }
             }

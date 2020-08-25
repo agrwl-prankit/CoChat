@@ -1,13 +1,13 @@
 package com.prankit.cochat;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,7 +85,12 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Logged in successful", Toast.LENGTH_SHORT).show();
                             }
                             else {
-                                Toast.makeText(LoginActivity.this, task.getException().toString() , Toast.LENGTH_SHORT).show();
+                                new AlertDialog.Builder(LoginActivity.this)
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .setTitle("Error in login")
+                                        .setMessage(task.getException().getMessage())
+                                        .setPositiveButton("Ok", null)
+                                        .show();
                             }
                             loadingBar.dismiss();
                         }
