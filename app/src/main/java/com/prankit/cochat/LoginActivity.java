@@ -58,6 +58,13 @@ public class LoginActivity extends AppCompatActivity {
                 allowUserToLogin();
             }
         });
+
+        phoneLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendUserToPhoneLoginActivity();
+            }
+        });
     }
 
     public void allowUserToLogin(){
@@ -96,6 +103,11 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private void sendUserToPhoneLoginActivity() {
+        Intent phoneLoginIntent = new Intent(LoginActivity.this, PhoneLoginActivity.class);
+        startActivity(phoneLoginIntent);
     }
 
     //  send user to main activity
