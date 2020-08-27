@@ -65,6 +65,13 @@ public class LoginActivity extends AppCompatActivity {
                 sendUserToPhoneLoginActivity();
             }
         });
+
+        forgetPasswordTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendUserToForgetPasswordActivity();
+            }
+        });
     }
 
     public void allowUserToLogin(){
@@ -122,5 +129,10 @@ public class LoginActivity extends AppCompatActivity {
     public void sendUserToRegisterActivity(){
         Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registerIntent);
+    }
+
+    private void sendUserToForgetPasswordActivity() {
+        Intent forgetIntent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+        startActivity(forgetIntent);
     }
 }
