@@ -1,17 +1,22 @@
 package com.prankit.cochat;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -103,10 +108,51 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settingsOption){
             sendUserToSettingsActivity();
         }
+        if(item.getItemId() == R.id.createGroupOption){
+            requestNewGroup();
+        }
         if (item.getItemId() == R.id.findFriendOption){
 
         }
         return true;
+    }
+
+    private void requestNewGroup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Enter group name: ");
+        final EditText groupNameField = new EditText(MainActivity.this);
+        groupNameField.setHint("enter group name...");
+        builder.setView(groupNameField);
+        builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String groupName = groupNameField.getText().toString();
+                if (groupName.equals(""))
+                    Toast.makeText(MainActivity.this, "Please enter group name", Toast.LENGTH_SHORT).show();
+                else {
+                    createNewGroup(groupName);
+                }
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.show();
+    }
+
+    private void createNewGroup(final String groupName) {
+        dbReference.child("Groups").child(groupName).setValue("")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(MainActivity.this, groupName + " is created successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void sendUserToSettingsActivity() {

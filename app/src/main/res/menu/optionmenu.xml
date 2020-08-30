@@ -9,6 +9,13 @@
     </item>
 
     <item
+        android:title="Create group"
+        android:id="@+id/createGroupOption"
+        app:showAsAction="never"
+        >
+    </item>
+
+    <item
         android:title="Settings"
         android:id="@+id/settingsOption"
         app:showAsAction="never">
