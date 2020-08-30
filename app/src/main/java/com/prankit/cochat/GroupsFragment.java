@@ -2,18 +2,33 @@ package com.prankit.cochat;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GroupsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 public class GroupsFragment extends Fragment {
+
+    private View groupFragmnetView;
+    private ListView listView;
+    private ArrayList<String> listOfGroups = new ArrayList<>();
+    private ArrayAdapter arrayAdapter;
+    private DatabaseReference dbReference;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +74,35 @@ public class GroupsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_groups, container, false);
+        groupFragmnetView = inflater.inflate(R.layout.fragment_groups, container, false);
+
+        dbReference = FirebaseDatabase.getInstance().getReference().child("Groups");
+        listView = (ListView) groupFragmnetView.findViewById(R.id.groupListView);
+        arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, listOfGroups);
+        listView.setAdapter(arrayAdapter);
+
+        retrieveAndDisplayGroups();
+        return groupFragmnetView;
+    }
+
+    private void retrieveAndDisplayGroups() {
+        dbReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Set<String> set = new HashSet<>();
+                Iterator iterator = snapshot.getChildren().iterator();
+                while (iterator.hasNext()){
+                    set.add(iterator.next().toString());
+                }
+                listOfGroups.clear();
+                listOfGroups.addAll(set);
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
