@@ -13,7 +13,20 @@
           "package_name": "com.prankit.cochat"
         }
       },
+<<<<<<< HEAD
       "oauth_client": [{
+=======
+      "oauth_client": [
+        {
+          "client_id": "305652647988-fsmv29bdj03lg7dsoj97ormngoarvtvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prankit.cochat",
+            "certificate_hash": "b878524c096ee7d35c7efea4997992c095dee54a"
+          }
+        },
+        {
+>>>>>>> origin/master
           "client_id": "305652647988-e04kbltd61mo8p6572btq2p7e5i3q4jg.apps.googleusercontent.com",
           "client_type": 3
         }
