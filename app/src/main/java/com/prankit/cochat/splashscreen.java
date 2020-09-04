@@ -26,8 +26,8 @@ public class splashscreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splashscreen);
-        image = (ImageView) findViewById(R.id.imageView);
-        logo = findViewById(R.id.textView);
+        image = (ImageView) findViewById(R.id.splashImageView);
+        logo = findViewById(R.id.splashTextView);
 
         topAnim = AnimationUtils.loadAnimation(this, R.anim.top_animation);
         bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);

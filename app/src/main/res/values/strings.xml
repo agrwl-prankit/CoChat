@@ -17,4 +17,6 @@
     <string name="username">username</string>
     <string name="status">status...</string>
     <string name="update">Update</string>
+    <string name="todo">TODO</string>
+    <string name="cochat">CoChat</string>
 </resources>
