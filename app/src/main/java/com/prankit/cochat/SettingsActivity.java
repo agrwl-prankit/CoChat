@@ -1,16 +1,23 @@
 package com.prankit.cochat;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +25,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
@@ -26,29 +38,31 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SettingsActivity extends AppCompatActivity {
 
     private EditText userNameEditText, statusEditText;
-    private Button updateSettingButton;
     private CircleImageView userProfileImage;
     private String currentUserId;
-    private FirebaseAuth firebaseAuth;
     private DatabaseReference dbReference;
-    private Toolbar settingToolbar;
+    private static final int GalleryPickRequest = 1;
+    private StorageReference userProfileImageReference;
+    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        settingToolbar = findViewById(R.id.settingToolBar);
+        Toolbar settingToolbar = findViewById(R.id.settingToolBar);
         setSupportActionBar(settingToolbar);
         getSupportActionBar().setTitle("Settings");
 
         userNameEditText = findViewById(R.id.setUserName);
         statusEditText = findViewById(R.id.setStatus);
-        updateSettingButton = findViewById(R.id.updateSettingButton);
+        Button updateSettingButton = findViewById(R.id.updateSettingButton);
         userProfileImage = findViewById(R.id.profileImage);
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         dbReference = FirebaseDatabase.getInstance().getReference();
         currentUserId = firebaseAuth.getCurrentUser().getUid();
+        userProfileImageReference = FirebaseStorage.getInstance().getReference().child("Profile Images");
+        loadingBar = new ProgressDialog(this);
 
         updateSettingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +71,72 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        userProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent galleryIntent = new Intent();
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/'");
+                startActivityForResult(galleryIntent, GalleryPickRequest);
+            }
+        });
+
         retrieveUserInfo();
+    }
+
+    /*@Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GalleryPickRequest && resultCode == RESULT_OK && data != null){
+            //Uri imageUri = data.getData();
+            CropImage.activity()
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(this);
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+            }
+        }
+    }*/
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GalleryPickRequest && resultCode == RESULT_OK){
+            loadingBar.setMessage("Please wait, profile image is uploading...");
+            loadingBar.setCanceledOnTouchOutside(false);
+            loadingBar.show();
+            Uri selectImageUri = data.getData();
+            final StorageReference imageReference = userProfileImageReference.child(currentUserId + ".jpg");
+            imageReference.putFile(selectImageUri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            loadingBar.dismiss();
+                            Toast.makeText(SettingsActivity.this, "profile image uploaded successfully.", Toast.LENGTH_SHORT).show();
+                            imageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String url = uri.toString();
+                                    dbReference.child("Users").child(currentUserId).child("image").setValue(url);
+                                }
+                            });
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            loadingBar.dismiss();
+                            new AlertDialog.Builder(SettingsActivity.this)
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setTitle("Failed to upload profile image")
+                                    .setMessage(e.getMessage())
+                                    .setPositiveButton("Ok", null)
+                                    .show();
+                        }
+                    });
+        }
     }
 
     private void retrieveUserInfo() {
@@ -66,11 +145,12 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {  // snapshot means currentUserId in Users
                         if (snapshot.exists() && snapshot.hasChild("name") && snapshot.hasChild("image")){
-                            String retrieveUserName = snapshot.child("name").getValue().toString();
-                            String retrieveUserStatus = snapshot.child("status").getValue().toString();
-                            String retrieveUserImage = snapshot.child("image").getValue().toString();
-                            userNameEditText.setText(retrieveUserName);
-                            statusEditText.setText(retrieveUserStatus);
+                            //String retrieveUserName = snapshot.child("name").getValue().toString();
+                            //String retrieveUserStatus = snapshot.child("status").getValue().toString();
+                            //String retrieveUserImage = snapshot.child("image").getValue().toString();
+                            userNameEditText.setText(snapshot.child("name").getValue().toString());
+                            statusEditText.setText(snapshot.child("status").getValue().toString());
+                            Glide.with(SettingsActivity.this).load(snapshot.child("image").getValue().toString()).into(userProfileImage);
                         }
                         else if (snapshot.exists() && snapshot.hasChild("name")){
                             String retrieveUserName = snapshot.child("name").getValue().toString();
@@ -105,7 +185,8 @@ public class SettingsActivity extends AppCompatActivity {
             profileMap.put("name", userNameEditText.getText().toString());
             profileMap.put("status", statusEditText.getText().toString());
 
-            dbReference.child("Users").child(currentUserId).setValue(profileMap)
+            dbReference.child("Users").child(currentUserId)
+                    .setValue(profileMap)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

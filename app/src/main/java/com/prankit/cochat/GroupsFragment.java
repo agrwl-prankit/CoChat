@@ -24,7 +24,7 @@ import java.util.Set;
 
 public class GroupsFragment extends Fragment {
 
-    private View groupFragmnetView;
+    private View groupFragmentView;
     private ListView listView;
     private ArrayList<String> listOfGroups = new ArrayList<>();
     private ArrayAdapter arrayAdapter;
@@ -74,15 +74,15 @@ public class GroupsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        groupFragmnetView = inflater.inflate(R.layout.fragment_groups, container, false);
+        groupFragmentView = inflater.inflate(R.layout.fragment_groups, container, false);
 
         dbReference = FirebaseDatabase.getInstance().getReference().child("Groups");
-        listView = (ListView) groupFragmnetView.findViewById(R.id.groupListView);
+        listView = (ListView) groupFragmentView.findViewById(R.id.groupListView);
         arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, listOfGroups);
         listView.setAdapter(arrayAdapter);
 
         retrieveAndDisplayGroups();
-        return groupFragmnetView;
+        return groupFragmentView;
     }
 
     private void retrieveAndDisplayGroups() {
