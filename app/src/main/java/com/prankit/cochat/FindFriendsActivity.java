@@ -4,12 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.appcompat.widget.Toolbar;
+
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -20,6 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FindFriendsActivity extends AppCompatActivity {
 
+    private Toolbar findFriendToolbar;
     private RecyclerView findFriendRecycleList;
     private DatabaseReference userRef;
 
@@ -28,7 +33,7 @@ public class FindFriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_friends);
 
-        Toolbar findFriendToolbar = findViewById(R.id.findFriendToolbar);
+        findFriendToolbar = findViewById(R.id.findFriendToolbar);
         setSupportActionBar(findFriendToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -42,18 +47,26 @@ public class FindFriendsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         FirebaseRecyclerOptions<Contact> options = new FirebaseRecyclerOptions.Builder<Contact>()
                 .setQuery(userRef, Contact.class)
                 .build();
-
         FirebaseRecyclerAdapter<Contact, FindFriendViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Contact, FindFriendViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull FindFriendViewHolder holder, int position, @NonNull Contact model) {
+            protected void onBindViewHolder(@NonNull FindFriendViewHolder holder, final int position, @NonNull Contact model) {
                 holder.userName.setText(model.getName());
                 holder.userStatus.setText(model.getStatus());
                 Glide.with(FindFriendsActivity.this).load(model.getImage()).placeholder(R.drawable.profileimage).into(holder.userProfileImage);
+
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String visitUserId = getRef(position).getKey();
+                        Intent profileIntent = new Intent(FindFriendsActivity.this, UserProfileActivity.class);
+                        profileIntent.putExtra("visituserId", visitUserId);
+                        startActivity(profileIntent);
+                    }
+                });
             }
 
             @NonNull
@@ -64,9 +77,8 @@ public class FindFriendsActivity extends AppCompatActivity {
                 return viewHolder;
             }
         };
-
         findFriendRecycleList.setAdapter(adapter);
-        adapter.startListening();
+        adapter.notifyDataSetChanged();
     }
 
     public static class FindFriendViewHolder extends RecyclerView.ViewHolder{
