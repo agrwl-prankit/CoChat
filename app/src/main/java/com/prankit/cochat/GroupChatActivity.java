@@ -65,7 +65,7 @@ public class GroupChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 saveMessageInfoToDatabase();
                 inputGroupMessage.setText("");
-                groupMessageList.smoothScrollToPosition(adapterCount-1);
+                //groupMessageList.smoothScrollToPosition(adapterCount-1);
             }
         });
 
@@ -100,7 +100,7 @@ public class GroupChatActivity extends AppCompatActivity {
         groupMessageList.setAdapter(adapter);
         adapter.startListening();
         adapterCount = adapter.getItemCount();
-        groupMessageList.smoothScrollToPosition(adapter.getItemCount()-1);
+        //groupMessageList.smoothScrollToPosition(adapter.getItemCount()-1);
     }
 
     public static class GroupChatViewHolder extends RecyclerView.ViewHolder{

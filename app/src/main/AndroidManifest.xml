@@ -17,7 +17,8 @@
         <activity
             android:name=".FindFriendsActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".GroupChatActivity" />
+        <activity android:name=".GroupChatActivity"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".ForgetPasswordActivity" />
         <activity android:name=".PhoneLoginActivity" />
         <activity android:name=".RegisterActivity" />

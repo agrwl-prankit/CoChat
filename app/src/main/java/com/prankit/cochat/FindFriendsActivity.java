@@ -78,7 +78,7 @@ public class FindFriendsActivity extends AppCompatActivity {
             }
         };
         findFriendRecycleList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        adapter.startListening();
     }
 
     public static class FindFriendViewHolder extends RecyclerView.ViewHolder{
