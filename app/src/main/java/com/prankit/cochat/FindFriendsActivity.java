@@ -4,15 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.appcompat.widget.Toolbar;
-
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -23,7 +20,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FindFriendsActivity extends AppCompatActivity {
 
-    private Toolbar findFriendToolbar;
     private RecyclerView findFriendRecycleList;
     private DatabaseReference userRef;
 
@@ -32,7 +28,7 @@ public class FindFriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_friends);
 
-        findFriendToolbar = findViewById(R.id.findFriendToolbar);
+        Toolbar findFriendToolbar = findViewById(R.id.findFriendToolbar);
         setSupportActionBar(findFriendToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -46,9 +42,11 @@ public class FindFriendsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
         FirebaseRecyclerOptions<Contact> options = new FirebaseRecyclerOptions.Builder<Contact>()
                 .setQuery(userRef, Contact.class)
                 .build();
+
         FirebaseRecyclerAdapter<Contact, FindFriendViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Contact, FindFriendViewHolder>(options) {
             @Override
@@ -66,8 +64,9 @@ public class FindFriendsActivity extends AppCompatActivity {
                 return viewHolder;
             }
         };
+
         findFriendRecycleList.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        adapter.startListening();
     }
 
     public static class FindFriendViewHolder extends RecyclerView.ViewHolder{
