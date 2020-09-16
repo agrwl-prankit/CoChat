@@ -51,7 +51,7 @@
         android:layout_below="@id/visitUserStatus"
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
-        android:text="Send Message"
+        android:text="Send Request"
         android:textAllCaps="false"
         android:textSize="23sp"
         android:textStyle="bold"
