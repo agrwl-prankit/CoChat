@@ -13,22 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserProfileActivity"></activity>
+        <activity android:name=".activities.UserProfileActivity"></activity>
         <activity
-            android:name=".FindFriendsActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".GroupChatActivity"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".ForgetPasswordActivity" />
-        <activity android:name=".PhoneLoginActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".MainActivity" />
+            android:name=".activities.FindFriendsActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity android:name=".activities.GroupChatActivity"
+            android:parentActivityName=".activities.MainActivity"/>
+        <activity android:name=".activities.ForgetPasswordActivity" />
+        <activity android:name=".activities.PhoneLoginActivity" />
+        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.MainActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".splashscreen">
+        <activity android:name=".activities.splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

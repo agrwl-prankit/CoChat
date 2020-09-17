@@ -1,4 +1,4 @@
-package com.prankit.cochat;
+package com.prankit.cochat.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.prankit.cochat.R;
+import com.prankit.cochat.activities.GroupChatActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;

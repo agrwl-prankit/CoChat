@@ -1,19 +1,23 @@
-package com.prankit.cochat;
+package com.prankit.cochat.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,9 +26,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.prankit.cochat.adapter.GroupChatAdapter;
+import com.prankit.cochat.model.Contact;
+import com.prankit.cochat.model.GroupChatInfo;
+import com.prankit.cochat.R;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 public class GroupChatActivity extends AppCompatActivity {
 
@@ -35,7 +46,9 @@ public class GroupChatActivity extends AppCompatActivity {
     private String currentGroupName, currentUserId, currentUserName, currentDate, currentTime;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference userReference, groupNameReference, groupMessageKeyRef;
-    private int adapterCount;
+    private List<GroupChatInfo> arrayList;
+    private GroupChatAdapter adapter;
+    private ScrollView mScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +63,7 @@ public class GroupChatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        mScrollView = findViewById(R.id.groupChatScrollView);
         sendGroupMessageButton = findViewById(R.id.sendGroupMessageButton);
         inputGroupMessage = findViewById(R.id.inputGroupMessage);
         firebaseAuth = FirebaseAuth.getInstance();
@@ -59,13 +73,12 @@ public class GroupChatActivity extends AppCompatActivity {
         groupMessageList = findViewById(R.id.groupMessageList);
         groupMessageList.setLayoutManager(new LinearLayoutManager(this));
 
-
         sendGroupMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveMessageInfoToDatabase();
                 inputGroupMessage.setText("");
-                //groupMessageList.smoothScrollToPosition(adapterCount-1);
+                groupMessageList.smoothScrollToPosition(adapter.getItemCount()-1);
             }
         });
 
@@ -75,43 +88,41 @@ public class GroupChatActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseRecyclerOptions<GroupChatInfo> options = new FirebaseRecyclerOptions.Builder<GroupChatInfo>()
-                .setQuery(groupNameReference, GroupChatInfo.class)
-                .build();
-
-        FirebaseRecyclerAdapter<GroupChatInfo, GroupChatViewHolder> adapter =
-                new FirebaseRecyclerAdapter<GroupChatInfo, GroupChatViewHolder>(options) {
+        groupNameReference.addValueEventListener(new ValueEventListener() {
             @Override
-            protected void onBindViewHolder(@NonNull GroupChatViewHolder holder, int position, @NonNull GroupChatInfo model) {
-                holder.name.setText(model.getName());
-                holder.message.setText(model.getMessage());
-                holder.time.setText(model.getTime());
-                holder.date.setText(model.getDate());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                arrayList = new ArrayList<GroupChatInfo>();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                    GroupChatInfo obj = snapshot1.getValue(GroupChatInfo.class);
+                    arrayList.add(obj);
+                }
+                adapter = new GroupChatAdapter(GroupChatActivity.this, arrayList);
+                groupMessageList.setAdapter(adapter);
+                //adapter.notifyDataSetChanged();
+                groupMessageList.smoothScrollToPosition(adapter.getItemCount()-1);
             }
 
-            @NonNull
             @Override
-            public GroupChatViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.group_message_view, viewGroup, false);
-                GroupChatViewHolder viewHolder = new GroupChatViewHolder(view);
-                return viewHolder;
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
-        };
-        groupMessageList.setAdapter(adapter);
-        adapter.startListening();
-        adapterCount = adapter.getItemCount();
-        //groupMessageList.smoothScrollToPosition(adapter.getItemCount()-1);
+        });
     }
 
-    public static class GroupChatViewHolder extends RecyclerView.ViewHolder{
-        TextView name, message, time, date;
-        public GroupChatViewHolder(@NonNull View itemView) {
-            super(itemView);
-            name = itemView.findViewById(R.id.groupUserNameView);
-            message = itemView.findViewById(R.id.groupMessageView);
-            time = itemView.findViewById(R.id.groupTimeView);
-            date = itemView.findViewById(R.id.groupDateView);
-        }
+    private void getUserInfo() {
+        userReference.child(currentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    currentUserName = snapshot.child("name").getValue().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void saveMessageInfoToDatabase() {
@@ -139,21 +150,5 @@ public class GroupChatActivity extends AppCompatActivity {
             messageInfoMap.put("time", currentTime);
             groupMessageKeyRef.updateChildren(messageInfoMap);
         }
-    }
-
-    private void getUserInfo() {
-        userReference.child(currentUserId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    currentUserName = snapshot.child("name").getValue().toString();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 }

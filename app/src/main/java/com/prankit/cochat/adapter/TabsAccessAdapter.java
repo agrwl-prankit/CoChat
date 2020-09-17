@@ -1,10 +1,14 @@
-package com.prankit.cochat;
+package com.prankit.cochat.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.prankit.cochat.fragments.ChatFragment;
+import com.prankit.cochat.fragments.ContactsFragment;
+import com.prankit.cochat.fragments.GroupsFragment;
 
 public class TabsAccessAdapter extends FragmentPagerAdapter {
 

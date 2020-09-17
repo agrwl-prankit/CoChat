@@ -1,4 +1,4 @@
-package com.prankit.cochat;
+package com.prankit.cochat.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.prankit.cochat.R;
 
 public class splashscreen extends AppCompatActivity {
 

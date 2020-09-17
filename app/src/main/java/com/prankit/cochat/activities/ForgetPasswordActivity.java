@@ -1,4 +1,4 @@
-package com.prankit.cochat;
+package com.prankit.cochat.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.prankit.cochat.R;
 
 public class ForgetPasswordActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.prankit.cochat;
+package com.prankit.cochat.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.prankit.cochat.R;
+
 import java.util.HashMap;
 import de.hdodenhof.circleimageview.CircleImageView;
 

@@ -1,4 +1,4 @@
-package com.prankit.cochat;
+package com.prankit.cochat.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -17,6 +17,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.prankit.cochat.R;
 
 public class RegisterActivity extends AppCompatActivity {
 

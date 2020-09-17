@@ -1,4 +1,4 @@
-package com.prankit.cochat;
+package com.prankit.cochat.model;
 
 public class GroupChatInfo {
 
