@@ -88,10 +88,10 @@ public class UserProfileActivity extends AppCompatActivity {
                     String request_type = snapshot.child(recieveUserId).child("request_type").getValue().toString();
                     if (request_type.equals("sent")){
                         currentState = "request_sent";
-                        sendMessageRequestButton.setText("Cancel Chat Request");
+                        sendMessageRequestButton.setText("Cancel Request");
                     }
-                    else if (request_type == "recieved"){
-                        currentState = "request_recieved";
+                    else if (request_type.equals("received")){
+                        currentState = "request_received";
                         sendMessageRequestButton.setText("Accept Request");
                         declineMessageRequestButton.setVisibility(View.VISIBLE);
                         declineMessageRequestButton.setEnabled(true);
@@ -132,16 +132,16 @@ public class UserProfileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     sendMessageRequestButton.setEnabled(false);
-                    if (currentState == "new"){
+                    if (currentState.equals("new")){
                         sendChatRequest();
                     }
-                    if (currentState == "request_sent"){
+                    if (currentState.equals("request_sent")){
                         cancelChatRequest();
                     }
-                    if (currentState == "request_recieved"){
+                    if (currentState.equals("request_received")){
                         acceptChatRequest();
                     }
-                    if (currentState == "friends"){
+                    if (currentState.equals("friends")){
                         removeFriend();
                     }
                 }
@@ -244,7 +244,7 @@ public class UserProfileActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     chatRequestRef.child(recieveUserId).child(senderUserId).child("request_type")
-                            .setValue("recieved").addOnCompleteListener(new OnCompleteListener<Void>() {
+                            .setValue("received").addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
