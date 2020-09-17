@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.prankit.cochat.fragments.ChatFragment;
 import com.prankit.cochat.fragments.ContactsFragment;
 import com.prankit.cochat.fragments.GroupsFragment;
+import com.prankit.cochat.fragments.RequestFragment;
 
 public class TabsAccessAdapter extends FragmentPagerAdapter {
 
@@ -29,6 +30,9 @@ public class TabsAccessAdapter extends FragmentPagerAdapter {
             case 2 :
                 ContactsFragment contactsFragment = new ContactsFragment();
                 return contactsFragment;
+            case 3:
+                RequestFragment requestFragment = new RequestFragment();
+                return requestFragment;
             default:
                 return null;
         }
@@ -36,7 +40,7 @@ public class TabsAccessAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Nullable
@@ -49,6 +53,8 @@ public class TabsAccessAdapter extends FragmentPagerAdapter {
                 return "Groups";
             case 2 :
                 return "Contacts";
+            case 3:
+                return "Requests";
             default :
                 return null;
         }
