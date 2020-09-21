@@ -51,7 +51,7 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(settingToolbar);
         getSupportActionBar().setTitle("Settings");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
 
         userNameEditText = findViewById(R.id.setUserName);
         statusEditText = findViewById(R.id.setStatus);
@@ -179,13 +179,12 @@ public class SettingsActivity extends AppCompatActivity {
         else if (statusEditText.getText().toString().equals(""))
             Toast.makeText(this, "Please write status!", Toast.LENGTH_SHORT).show();
         else {
-            HashMap<String, String> profileMap = new HashMap<>();
+            HashMap<String, Object> profileMap = new HashMap<>();
             profileMap.put("uid", currentUserId);
             profileMap.put("name", userNameEditText.getText().toString());
             profileMap.put("status", statusEditText.getText().toString());
 
-            dbReference.child("Users").child(currentUserId)
-                    .setValue(profileMap)
+            dbReference.child("Users").child(currentUserId).updateChildren(profileMap)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

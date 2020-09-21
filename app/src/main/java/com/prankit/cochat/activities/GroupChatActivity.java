@@ -61,7 +61,7 @@ public class GroupChatActivity extends AppCompatActivity {
         setSupportActionBar(groupChatToolbar);
         getSupportActionBar().setTitle(currentGroupName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
 
         mScrollView = findViewById(R.id.groupChatScrollView);
         sendGroupMessageButton = findViewById(R.id.sendGroupMessageButton);
@@ -78,7 +78,8 @@ public class GroupChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 saveMessageInfoToDatabase();
                 inputGroupMessage.setText("");
-                groupMessageList.smoothScrollToPosition(adapter.getItemCount()-1);
+                mScrollView.fullScroll(View.FOCUS_DOWN);
+                groupMessageList.smoothScrollToPosition(adapter.getItemCount());
             }
         });
 
@@ -98,8 +99,8 @@ public class GroupChatActivity extends AppCompatActivity {
                 }
                 adapter = new GroupChatAdapter(GroupChatActivity.this, arrayList);
                 groupMessageList.setAdapter(adapter);
+                groupMessageList.smoothScrollToPosition(adapter.getItemCount());
                 //adapter.notifyDataSetChanged();
-                groupMessageList.smoothScrollToPosition(adapter.getItemCount()-1);
             }
 
             @Override

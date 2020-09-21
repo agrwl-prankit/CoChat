@@ -2,6 +2,7 @@ package com.prankit.cochat.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,12 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+        Toolbar profileToolbar = findViewById(R.id.userProfileToolbar);
+        setSupportActionBar(profileToolbar);
+        getSupportActionBar().setTitle( "Profile");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
 
         recieveUserId = getIntent().getExtras().get("visituserId").toString();
         visitUserName = findViewById(R.id.visitUserName);
@@ -88,11 +95,11 @@ public class UserProfileActivity extends AppCompatActivity {
                     String request_type = snapshot.child(recieveUserId).child("request_type").getValue().toString();
                     if (request_type.equals("sent")){
                         currentState = "request_sent";
-                        sendMessageRequestButton.setText("Cancel Request");
+                        sendMessageRequestButton.setText("Cancel Friend Request");
                     }
                     else if (request_type.equals("received")){
                         currentState = "request_received";
-                        sendMessageRequestButton.setText("Accept Request");
+                        sendMessageRequestButton.setText("Accept Friend Request");
                         declineMessageRequestButton.setVisibility(View.VISIBLE);
                         declineMessageRequestButton.setEnabled(true);
                         declineMessageRequestButton.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +171,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                             if (task.isSuccessful()){
                                                 sendMessageRequestButton.setEnabled(true);
                                                 currentState = "new";
-                                                sendMessageRequestButton.setText("Send Request");
+                                                sendMessageRequestButton.setText("Send Friend Request");
                                                 declineMessageRequestButton.setVisibility(View.INVISIBLE);
                                                 declineMessageRequestButton.setEnabled(false);
                                             }
@@ -197,7 +204,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                                     sendMessageRequestButton.setEnabled(true);
                                                                                     currentState = "friends";
-                                                                                    sendMessageRequestButton.setText("Remove");
+                                                                                    sendMessageRequestButton.setText("Remove Friends");
                                                                                     declineMessageRequestButton.setVisibility(View.INVISIBLE);
                                                                                     declineMessageRequestButton.setEnabled(false);
                                                                                 }
@@ -226,7 +233,7 @@ public class UserProfileActivity extends AppCompatActivity {
                                             if (task.isSuccessful()){
                                                 sendMessageRequestButton.setEnabled(true);
                                                 currentState = "new";
-                                                sendMessageRequestButton.setText("Send Request");
+                                                sendMessageRequestButton.setText("Send Friend Request");
                                                 declineMessageRequestButton.setVisibility(View.INVISIBLE);
                                                 declineMessageRequestButton.setEnabled(false);
                                             }
@@ -250,7 +257,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             if (task.isSuccessful()){
                                 sendMessageRequestButton.setEnabled(true);
                                 currentState = "request_sent";
-                                sendMessageRequestButton.setText("Cancel Chat Request");
+                                sendMessageRequestButton.setText("Cancel Friend Request");
                             }
                         }
                     });

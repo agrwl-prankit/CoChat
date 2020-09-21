@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,11 +20,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.prankit.cochat.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class LoginActivity extends AppCompatActivity {
 
-    private Button loginButton, phoneLoginButton;
     private EditText emailEditText, passwordEditText;
-    private TextView needNewAccountTextView, forgetPasswordTextView;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog loadingBar;
 
@@ -35,15 +36,15 @@ public class LoginActivity extends AppCompatActivity {
         // initialize fields and instances
         firebaseAuth = FirebaseAuth.getInstance();
         loadingBar = new ProgressDialog(this);
-        loginButton = findViewById(R.id.loginButton);
-        phoneLoginButton = findViewById(R.id.phoneLoginButton);
+        Button loginButton = findViewById(R.id.loginButton);
+        CircleImageView phoneLoginButton = findViewById(R.id.phoneLoginButton);
         emailEditText = findViewById(R.id.loginEmailEditText);
         passwordEditText = findViewById(R.id.loginPasswordEditText);
-        needNewAccountTextView = findViewById(R.id.needNewAccountTextView);
-        forgetPasswordTextView= findViewById(R.id.forgetPasswordTextView);
+        Button needNewAccountButton = findViewById(R.id.needNewAccountTextView);
+        TextView forgetPasswordTextView = findViewById(R.id.forgetPasswordTextView);
 
         // when needNewAccount text is clicked
-        needNewAccountTextView.setOnClickListener(new View.OnClickListener() {
+        needNewAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendUserToRegisterActivity();
@@ -114,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
     private void sendUserToPhoneLoginActivity() {
         Intent phoneLoginIntent = new Intent(LoginActivity.this, PhoneLoginActivity.class);
         startActivity(phoneLoginIntent);
+        finish();
     }
 
     //  send user to main activity
@@ -128,10 +130,12 @@ public class LoginActivity extends AppCompatActivity {
     public void sendUserToRegisterActivity(){
         Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registerIntent);
+        finish();
     }
 
     private void sendUserToForgetPasswordActivity() {
         Intent forgetIntent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
         startActivity(forgetIntent);
+        finish();
     }
 }

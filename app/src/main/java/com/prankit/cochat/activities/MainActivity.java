@@ -156,9 +156,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendUserToSettingsActivity() {
         Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
-        settingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(settingIntent);
-        finish();
     }
 
     private void sendUserToLoginActivity() {

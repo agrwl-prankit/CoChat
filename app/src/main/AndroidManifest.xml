@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.prankit.cochat">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,22 +14,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.UserProfileActivity"
+        <activity
+            android:name=".activities.UserProfileActivity"
             android:parentActivityName=".activities.FindFriendsActivity" />
         <activity
             android:name=".activities.FindFriendsActivity"
             android:parentActivityName=".activities.MainActivity" />
-        <activity android:name=".activities.GroupChatActivity"
+        <activity
+            android:name=".activities.GroupChatActivity"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.SettingsActivity"
             android:parentActivityName=".activities.MainActivity"/>
         <activity android:name=".activities.ForgetPasswordActivity" />
         <activity android:name=".activities.PhoneLoginActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.MainActivity" />
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".activities.splashscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

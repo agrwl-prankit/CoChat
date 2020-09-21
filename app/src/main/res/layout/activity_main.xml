@@ -10,8 +10,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:background="#6F27BB">
         <include
             android:id="@+id/mainToolBar"
             layout="@layout/app_bar_layout"/>
@@ -19,8 +19,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+            android:layout_height="wrap_content" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
