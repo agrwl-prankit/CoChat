@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".activities.SettingsActivity">
 
-    <include
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/settingToolBar"
-        layout="@layout/app_bar_layout">
-    </include>
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"

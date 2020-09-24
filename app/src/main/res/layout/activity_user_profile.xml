@@ -7,9 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".activities.UserProfileActivity">
 
-    <include
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/userProfileToolbar"
-        layout="@layout/app_bar_layout"/>
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/visitUserProfileImage"
@@ -68,7 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/sendMessageRequestButton"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:text="Cancel Friend Request"
         android:textAllCaps="false"
         android:textSize="23sp"

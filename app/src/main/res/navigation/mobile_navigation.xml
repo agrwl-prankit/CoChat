@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_chats">
+
+    <fragment
+        android:id="@+id/nav_chats"
+        android:name="com.prankit.cochat.fragments.ChatFragment"
+        android:label="Chats"
+        tools:layout="@layout/fragment_chat" />
+
+    <fragment
+        android:id="@+id/nav_groups"
+        android:name="com.prankit.cochat.fragments.GroupsFragment"
+        android:label="Groups"
+        tools:layout="@layout/fragment_groups" />
+
+    <fragment
+        android:id="@+id/nav_contacts"
+        android:name="com.prankit.cochat.fragments.ContactsFragment"
+        android:label="Contacts"
+        tools:layout="@layout/fragment_contacts" />
+
+    <fragment
+        android:id="@+id/nav_requests"
+        android:name="com.prankit.cochat.fragments.RequestFragment"
+        android:label="Friend Requests"
+        tools:layout="@layout/fragment_request"
+        />
+
+    <activity
+        android:id="@+id/nav_find_friend"
+        android:name="com.prankit.cochat.activities.FindFriendsActivity"
+        android:label="Contacts"
+        tools:layout="@layout/activity_find_friends"
+        />
+
+    <activity
+        android:id="@+id/nav_settings"
+        android:name="com.prankit.cochat.activities.SettingsActivity"
+        android:label="Contacts"
+        tools:layout="@layout/activity_settings"
+        />
+
+</navigation>

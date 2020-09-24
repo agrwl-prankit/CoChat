@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/g1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_chats"
+            android:title="Personal Chat" />
+        <item
+            android:id="@+id/nav_groups"
+            android:title="Group Chat" />
+    </group>
+
+    <group
+        android:id="@+id/g2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_contacts"
+            android:title="Contacts" />
+        <item
+            android:id="@+id/nav_requests"
+            android:title="Friend Request" />
+        <item
+            android:id="@+id/nav_find_friend"
+            android:title="Find Friends" />
+    </group>
+
+    <group
+        android:id="@+id/g3"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Settings" />
+    </group>
+
+</menu>

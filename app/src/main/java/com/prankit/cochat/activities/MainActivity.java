@@ -1,20 +1,19 @@
 package com.prankit.cochat.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Menu;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,49 +22,67 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prankit.cochat.R;
-import com.prankit.cochat.adapter.TabsAccessAdapter;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar mainToolbar;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-    private TabsAccessAdapter tabsAccessAdapter;
+    private AppBarConfiguration mAppBarConfiguration;
+    private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
-    private FirebaseAuth firebaseAuth;          // to access firebase methods
-    private DatabaseReference dbReference;      // to read and write data from database we need an instance of DatabaseReference
+    private DatabaseReference dbReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        // add toolBar to screen
-        mainToolbar = findViewById(R.id.mainToolBar);
-        setSupportActionBar(mainToolbar);
-        getSupportActionBar().setTitle("CoChat");
-
-        // initialize all fields and instances
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
         dbReference = FirebaseDatabase.getInstance().getReference();
-        viewPager = findViewById(R.id.main_tabs_pager);
-        tabsAccessAdapter = new TabsAccessAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(tabsAccessAdapter);
-        tabLayout = findViewById(R.id.tabBar);
-        tabLayout.setupWithViewPager(viewPager);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.app_name, R.string.app_name);
+        drawer.addDrawerListener(drawerToggle);
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerToggle.syncState();
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_chats, R.id.nav_contacts, R.id.nav_groups, R.id.nav_requests)
+                .setDrawerLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    // when app will start this method is called
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
-        // check if user is already login or not
         if (currentUser == null){
             sendUserToLoginActivity();
             finish();
         }
-        // check whether the profile (username and status) is updated or not
         else {
             verifyUserExistence();
         }
@@ -80,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
                 if (!snapshot.child("name").exists()){       // check whether the name exists or not
                     sendUserToSettingsActivity();
                 }
+                else
+                    updateHeader();
             }
 
             @Override
@@ -88,15 +107,47 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // add option menu from optionMenu.xml in MainActivity
+    private void updateHeader() {
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        final TextView headerName = headerView.findViewById(R.id.headerProfileName);
+        final TextView headerStatus = headerView.findViewById(R.id.headerProfileStatus);
+        final CircleImageView headerImage = headerView.findViewById(R.id.headerProfileImage);
+
+        final String currentUserId = firebaseAuth.getCurrentUser().getUid();
+        dbReference.child("Users").child(currentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild("image")){
+                    String name = snapshot.child("name").getValue().toString();
+                    String status = snapshot.child("status").getValue().toString();
+                    String image = snapshot.child("image").getValue().toString();
+                    headerName.setText(name);
+                    headerStatus.setText(status);
+                    Glide.with(MainActivity.this).load(image).placeholder(R.drawable.profileimage).into(headerImage);
+                }
+                else {
+                    String name = snapshot.child("name").getValue().toString();
+                    String status = snapshot.child("status").getValue().toString();
+                    headerName.setText(name);
+                    headerStatus.setText(status);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.optionmenu, menu);
+        getMenuInflater().inflate(R.menu.option_menu, menu);
         return true;
     }
 
-    // when items from menuBar is selected
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
@@ -104,14 +155,8 @@ public class MainActivity extends AppCompatActivity {
             firebaseAuth.signOut();
             sendUserToLoginActivity();
         }
-        else if (item.getItemId() == R.id.settingsOption){
-            sendUserToSettingsActivity();
-        }
         else if(item.getItemId() == R.id.createGroupOption){
             requestNewGroup();
-        }
-        else if (item.getItemId() == R.id.findFriendOption){
-            sendUserToFindFriendActivity();
         }
         return true;
     }
@@ -154,11 +199,6 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-    private void sendUserToSettingsActivity() {
-        Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
-        startActivity(settingIntent);
-    }
-
     private void sendUserToLoginActivity() {
         Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
         loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -166,8 +206,8 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    private void sendUserToFindFriendActivity() {
-        Intent findFriendIntent = new Intent(MainActivity.this, FindFriendsActivity.class);
-        startActivity(findFriendIntent);
+    private void sendUserToSettingsActivity() {
+        Intent settingIntent = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(settingIntent);
     }
 }
