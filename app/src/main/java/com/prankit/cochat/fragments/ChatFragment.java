@@ -1,5 +1,6 @@
 package com.prankit.cochat.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prankit.cochat.R;
+import com.prankit.cochat.activities.ChatActivity;
 import com.prankit.cochat.model.Contact;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -108,17 +110,31 @@ public class ChatFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull final ChatViewHolder holder, int position, @NonNull Contact model) {
                 final String userId = getRef(position).getKey();
+                final String[] userImage = {"default_image"};
                 userRef.child(userId).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.hasChild("image")){
-                            String userImage = snapshot.child("image").getValue().toString();
-                            Glide.with(ChatFragment.this).load(userImage)
-                                    .placeholder(R.drawable.profileimage).into(holder.profileImage);
+                        if (snapshot.exists()) {
+                            if (snapshot.hasChild("image")) {
+                                userImage[0] = snapshot.child("image").getValue().toString();
+                                Glide.with(ChatFragment.this).load(userImage[0])
+                                        .placeholder(R.drawable.profileimage).into(holder.profileImage);
+                            }
+                            final String profileName = snapshot.child("name").getValue().toString();
+                            holder.userName.setText(profileName);
+                            holder.userStatus.setText("Last seen: " + "\n" + "Date " + "Time ");
+
+                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent chatIntent = new Intent(getContext(), ChatActivity.class);
+                                    chatIntent.putExtra("chatUserId", userId);
+                                    chatIntent.putExtra("chatUserName", profileName);
+                                    chatIntent.putExtra("chatUserImage", userImage[0]);
+                                    startActivity(chatIntent);
+                                }
+                            });
                         }
-                        String profileName = snapshot.child("name").getValue().toString();
-                        holder.userName.setText(profileName);
-                        holder.userStatus.setText("Last seen: " + "\n" + "Date " + "Time ");
                     }
 
                     @Override
