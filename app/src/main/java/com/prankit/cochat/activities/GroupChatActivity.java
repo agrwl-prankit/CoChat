@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,13 +40,13 @@ import java.util.List;
 
 public class GroupChatActivity extends AppCompatActivity {
 
-    private Toolbar groupChatToolbar;
-    private ImageButton sendGroupMessageButton;
     private EditText inputGroupMessage;
     private RecyclerView groupMessageList;
-    private String currentGroupName, currentUserId, currentUserName, currentDate, currentTime;
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference userReference, groupNameReference, groupMessageKeyRef;
+    private String currentGroupName;
+    private String currentUserId;
+    private String currentUserName;
+    private DatabaseReference userReference;
+    private DatabaseReference groupNameReference;
     private List<GroupChatInfo> arrayList;
     private GroupChatAdapter adapter;
     private ScrollView mScrollView;
@@ -57,16 +58,16 @@ public class GroupChatActivity extends AppCompatActivity {
 
         currentGroupName = getIntent().getExtras().get("groupName").toString();
 
-        groupChatToolbar = findViewById(R.id.groupChatToolBar);
+        Toolbar groupChatToolbar = findViewById(R.id.groupChatToolBar);
         setSupportActionBar(groupChatToolbar);
         getSupportActionBar().setTitle(currentGroupName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
 
         mScrollView = findViewById(R.id.groupChatScrollView);
-        sendGroupMessageButton = findViewById(R.id.sendGroupMessageButton);
+        ImageButton sendGroupMessageButton = findViewById(R.id.sendGroupMessageButton);
         inputGroupMessage = findViewById(R.id.inputGroupMessage);
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         currentUserId = firebaseAuth.getCurrentUser().getUid();
         userReference = FirebaseDatabase.getInstance().getReference().child("Users");
         groupNameReference = FirebaseDatabase.getInstance().getReference().child("Groups").child(currentGroupName);
@@ -134,15 +135,15 @@ public class GroupChatActivity extends AppCompatActivity {
         else {
             Calendar calForDate = Calendar.getInstance();
             SimpleDateFormat currentDateFormat = new SimpleDateFormat("dd MM, yyyy");
-            currentDate = currentDateFormat.format(calForDate.getTime());
+            String currentDate = currentDateFormat.format(calForDate.getTime());
 
             Calendar calForTime = Calendar.getInstance();
             @SuppressLint("SimpleDateFormat") SimpleDateFormat currentTimeFormat = new SimpleDateFormat("hh:mm a");
-            currentTime = currentTimeFormat.format(calForTime.getTime());
+            String currentTime = currentTimeFormat.format(calForTime.getTime());
 
             HashMap<String, Object> groupMessageKey = new HashMap<>();
             groupNameReference.updateChildren(groupMessageKey);
-            groupMessageKeyRef = groupNameReference.child(messageKey);
+            DatabaseReference groupMessageKeyRef = groupNameReference.child(messageKey);
 
             HashMap<String, Object> messageInfoMap = new HashMap<>();
             messageInfoMap.put("name", currentUserName);

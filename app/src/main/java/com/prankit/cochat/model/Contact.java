@@ -2,14 +2,15 @@ package com.prankit.cochat.model;
 
 public class Contact {
 
-    public String name, status, image;
+    public String name, status, image, uid;
 
     public Contact(){}
 
-    public Contact(String name, String status, String image) {
+    public Contact(String name, String status, String image, String uid) {
         this.name = name;
         this.status = status;
         this.image = image;
+        this.uid = uid;
     }
 
     public String getName() {
@@ -34,5 +35,13 @@ public class Contact {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

@@ -36,11 +36,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ChatFragment extends Fragment {
 
-    private View chatView;
     private RecyclerView chatList;
     private DatabaseReference chatRef, userRef;
-    private FirebaseAuth mAuth;
-    private String currentUserId;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,13 +83,13 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        chatView = inflater.inflate(R.layout.fragment_chat, container, false);
+        View chatView = inflater.inflate(R.layout.fragment_chat, container, false);
 
         chatList = chatView.findViewById(R.id.chatList);
         chatList.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAuth = FirebaseAuth.getInstance();
-        currentUserId = mAuth.getUid();
-        chatRef = FirebaseDatabase.getInstance().getReference().child("Contact").child(currentUserId);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String currentUserId = mAuth.getUid();
+        chatRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserId);
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         return chatView;

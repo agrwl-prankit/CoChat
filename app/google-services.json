@@ -44,6 +44,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "305652647988-ldaai3amarla64l7bol4d057asmi1pr6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prankit.cochat",
+            "certificate_hash": "8d2a0204110fb352776f6248a2b4f1a3777c3663"
+          }
+        },
+        {
           "client_id": "305652647988-fsmv29bdj03lg7dsoj97ormngoarvtvr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

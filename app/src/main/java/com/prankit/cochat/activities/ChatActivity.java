@@ -17,32 +17,31 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private String messageRecieverId, messageRecieverName, messageRecieverImage;
+    private String messageReceiverId, messageReceiverName, messageRecieverImage;
     private TextView userName, userLastSeen;
     private CircleImageView userImage;
-    private Toolbar chatToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        chatToolBar = findViewById(R.id.chatToolBar);
+        Toolbar chatToolBar = findViewById(R.id.chatToolBar);
         setSupportActionBar(chatToolBar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
         LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View actionBarView = layoutInflater.inflate(R.layout.custom_chat_bar, null);
-        actionBar.setCustomView(actionBarView);
+        getSupportActionBar().setCustomView(actionBarView);
 
-        messageRecieverId = getIntent().getExtras().get("chatUserId").toString();
-        messageRecieverName = getIntent().getExtras().get("chatUserName").toString();
+        messageReceiverId = getIntent().getExtras().get("chatUserId").toString();
+        messageReceiverName = getIntent().getExtras().get("chatUserName").toString();
         messageRecieverImage = getIntent().getExtras().get("chatUserImage").toString();
         userName = findViewById(R.id.chatUserName);
         userLastSeen = findViewById(R.id.chatUserLastSeen);
         userImage = findViewById(R.id.chatUserImage);
-        userName.setText(messageRecieverName);
+        userName.setText(messageReceiverName);
         Glide.with(this).load(messageRecieverImage).placeholder(R.drawable.profileimage).into(userImage);
     }
 }
