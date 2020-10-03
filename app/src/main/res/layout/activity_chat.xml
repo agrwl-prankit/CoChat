@@ -30,7 +30,7 @@
         android:layout_alignParentBottom="true">
 
         <EditText
-            android:id="@+id/inputChatpMessage"
+            android:id="@+id/inputChatMessage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Enter the message here..."
