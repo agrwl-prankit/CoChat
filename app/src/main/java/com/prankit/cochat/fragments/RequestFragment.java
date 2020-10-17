@@ -1,15 +1,20 @@
 package com.prankit.cochat.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,15 +22,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prankit.cochat.R;
-import com.prankit.cochat.adapter.FriendRequestAdapter;
+import com.prankit.cochat.activities.UserProfileActivity;
 import com.prankit.cochat.model.Contact;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,8 +37,6 @@ public class RequestFragment extends Fragment {
     private DatabaseReference requestRef, userRef, contactsRef;
     private String currentUserId;
     private RecyclerView requestList;
-    private List<Contact> arrayList;
-    private FriendRequestAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -96,7 +94,7 @@ public class RequestFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        /*FirebaseRecyclerOptions<Contact> options = new FirebaseRecyclerOptions.Builder<Contact>()
+        FirebaseRecyclerOptions<Contact> options = new FirebaseRecyclerOptions.Builder<Contact>()
                 .setQuery(requestRef.child(currentUserId), Contact.class)
                 .build();
 
@@ -109,36 +107,67 @@ public class RequestFragment extends Fragment {
                 getTypeRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists() && snapshot.getValue().toString().equals("received")) {
-                            userRef.child(listUserId).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.hasChild("image")){
-                                        final String requestUserImage = snapshot.child("image").getValue().toString();
-                                        final String requestUserName = snapshot.child("name").getValue().toString();
-                                        holder.userName.setText(requestUserName);
-                                        holder.userStatus.setText("Wants to connect with you");
-                                        Glide.with(RequestFragment.this).load(requestUserImage)
-                                                .placeholder(R.drawable.profileimage).into(holder.userProfile);
-                                    }
-                                    final String requestUserName = snapshot.child("name").getValue().toString();
-                                    holder.userName.setText(requestUserName);
-                                    holder.userStatus.setText("Wants to connect with you");
-                                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            String visitUserId = getRef(position).getKey();
-                                            Intent profileIntent = new Intent(getContext(), UserProfileActivity.class);
-                                            profileIntent.putExtra("visituserId", visitUserId);
-                                            startActivity(profileIntent);
+                        if (snapshot.exists()) {
+                            String type = snapshot.getValue().toString();
+                            if (type.equals("received")) {
+                                userRef.child(listUserId).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.hasChild("image")) {
+                                            final String requestUserImage = snapshot.child("image").getValue().toString();
+                                            final String requestUserName = snapshot.child("name").getValue().toString();
+                                            holder.requestName.setText(requestUserName);
+                                            holder.requestStatus.setText("Wants to connect with you");
+                                            Glide.with(RequestFragment.this).load(requestUserImage)
+                                                    .placeholder(R.drawable.profileimage).into(holder.requestImage);
                                         }
-                                    });
-                                }
+                                        final String requestUserName = snapshot.child("name").getValue().toString();
+                                        holder.requestName.setText(requestUserName);
+                                        holder.requestStatus.setText("Wants to connect with you");
+                                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                String visitUserId = getRef(position).getKey();
+                                                Intent profileIntent = new Intent(getContext(), UserProfileActivity.class);
+                                                profileIntent.putExtra("visituserId", visitUserId);
+                                                startActivity(profileIntent);
+                                            }
+                                        });
+                                    }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                }
-                            });
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
+                                });
+                            }
+                            else if (type.equals("sent")){
+                                userRef.child(listUserId).addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.hasChild("image")) {
+                                            final String requestUserImage = snapshot.child("image").getValue().toString();
+                                            Glide.with(RequestFragment.this).load(requestUserImage)
+                                                    .placeholder(R.drawable.profileimage).into(holder.requestImage);
+                                        }
+                                        final String requestUserName = snapshot.child("name").getValue().toString();
+                                        holder.requestName.setText(requestUserName);
+                                        holder.requestStatus.setText("Did not accept your friend request yet");
+                                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View view) {
+                                                String visitUserId = getRef(position).getKey();
+                                                Intent profileIntent = new Intent(getContext(), UserProfileActivity.class);
+                                                profileIntent.putExtra("visituserId", visitUserId);
+                                                startActivity(profileIntent);
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
+                                });
+                            }
                         }
                     }
 
@@ -158,43 +187,17 @@ public class RequestFragment extends Fragment {
             }
         };
         requestList.setAdapter(adapter);
-        adapter.startListening();*/
+        adapter.startListening();
+    }
 
-        requestRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull final DataSnapshot snapshot) {
-                for (DataSnapshot s1 : snapshot.getChildren()) {
-                    if (s1.child("request_type").getValue().toString().equals("received")) {
-                        final String id = s1.getKey();
-                        userRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot1) {
-                                arrayList = new ArrayList<Contact>();
-                                for (DataSnapshot s1 : snapshot1.getChildren()) {
-                                    //Contact obj = s1.getValue(Contact.class);
-                                    //arrayList.add(obj);
-                                    if (s1.getKey().equals(id)){
-                                        Contact obj = s1.getValue(Contact.class);
-                                        arrayList.add(obj);
-                                    }
-                                }
-                                Log.i("set", arrayList.toString());
-                                adapter = new FriendRequestAdapter(arrayList, getContext());
-                                requestList.setAdapter(adapter);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+    public static class RequestViewHolder extends RecyclerView.ViewHolder{
+        TextView requestName, requestStatus;
+        CircleImageView requestImage;
+        public RequestViewHolder(@NonNull View itemView) {
+            super(itemView);
+            requestName = itemView.findViewById(R.id.userProfileNameView);
+            requestStatus = itemView.findViewById(R.id.userStatusView);
+            requestImage = itemView.findViewById(R.id.userProfileImageView);
+        }
     }
 }

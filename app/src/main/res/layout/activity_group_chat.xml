@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/cback"
     tools:context=".activities.GroupChatActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/groupChatToolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="#0D193D"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <ScrollView

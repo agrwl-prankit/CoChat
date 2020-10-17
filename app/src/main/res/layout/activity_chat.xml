@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ChatActivity">
+    tools:context=".activities.ChatActivity"
+    android:background="@drawable/cback">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/chatToolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="#0D193D"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -43,7 +44,8 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="#15363F">
 
             <ImageButton
                 android:id="@+id/sendChatMessageButton"

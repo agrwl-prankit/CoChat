@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/cback"
     tools:context=".activities.UserProfileActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/userProfileToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="#0D193D"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -32,6 +33,7 @@
         android:layout_marginRight="15dp"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@android:color/background_light"
         android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:gravity="center_horizontal"
@@ -46,6 +48,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:textSize="25sp"
+        android:textColor="@android:color/background_light"
         android:layout_marginTop="25dp"
         android:textAlignment="center"
         android:gravity="center_horizontal"
@@ -61,8 +64,8 @@
         android:textAllCaps="false"
         android:textSize="23sp"
         android:textStyle="bold"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="#FCFCFD"
+        android:background="@drawable/stylerounded"
+        android:textColor="#0D193D"
         android:layout_marginLeft="65dp"
         android:layout_marginRight="65dp"/>
 
@@ -76,8 +79,8 @@
         android:textAllCaps="false"
         android:textSize="23sp"
         android:textStyle="bold"
-        android:background="@color/colorPrimaryDark"
-        android:textColor="#FCFCFD"
+        android:background="@drawable/stylerounded"
+        android:textColor="#0D193D"
         android:layout_marginLeft="65dp"
         android:layout_marginRight="65dp"
         android:visibility="invisible"/>

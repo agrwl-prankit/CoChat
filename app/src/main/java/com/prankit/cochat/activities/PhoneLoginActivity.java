@@ -29,9 +29,8 @@ public class PhoneLoginActivity extends AppCompatActivity {
     private EditText inputPhoneNumber, inputVerificationCode;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private String mVerificationId;
-    private PhoneAuthProvider.ForceResendingToken mResendToken;
     private FirebaseAuth mAuth;
-    private ProgressDialog loadingbar;
+    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
         inputPhoneNumber = findViewById(R.id.phoneNumberEditText);
         inputVerificationCode = findViewById(R.id.verificationCodeEditText);
         mAuth = FirebaseAuth.getInstance();
-        loadingbar = new ProgressDialog(this);
+        loadingBar = new ProgressDialog(this);
 
         sendCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,10 +51,10 @@ public class PhoneLoginActivity extends AppCompatActivity {
                     Toast.makeText(PhoneLoginActivity.this, "Please enter phone number..", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    loadingbar.setTitle("Phone verification");
-                    loadingbar.setMessage("Please wait, we are authenticating your phone");
-                    loadingbar.setCanceledOnTouchOutside(false);
-                    loadingbar.show();
+                    loadingBar.setTitle("Phone verification");
+                    loadingBar.setMessage("Please wait, we are authenticating your phone");
+                    loadingBar.setCanceledOnTouchOutside(false);
+                    loadingBar.show();
                     PhoneAuthProvider.getInstance().verifyPhoneNumber(
                             inputPhoneNumber.getText().toString(),        // Phone number to verify
                             60,                                        // Timeout duration
@@ -75,10 +74,10 @@ public class PhoneLoginActivity extends AppCompatActivity {
                     Toast.makeText(PhoneLoginActivity.this, "Please write verification code", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    loadingbar.setTitle("Verification code");
-                    loadingbar.setMessage("Please wait, we are verifying your verification code");
-                    loadingbar.setCanceledOnTouchOutside(false);
-                    loadingbar.show();
+                    loadingBar.setTitle("Verification code");
+                    loadingBar.setMessage("Please wait, we are verifying your verification code");
+                    loadingBar.setCanceledOnTouchOutside(false);
+                    loadingBar.show();
                     PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, inputVerificationCode.getText().toString());
                     signInWithPhoneAuthCredential(credential);
                 }
@@ -93,7 +92,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
-                loadingbar.dismiss();
+                loadingBar.dismiss();
                 new AlertDialog.Builder(PhoneLoginActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Invalid phone number")
@@ -110,10 +109,9 @@ public class PhoneLoginActivity extends AppCompatActivity {
             @Override
             public void onCodeSent(@NonNull String verificationId,
                                    @NonNull PhoneAuthProvider.ForceResendingToken token) {
-                loadingbar.dismiss();
+                loadingBar.dismiss();
                 // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
-                mResendToken = token;
                 Toast.makeText(PhoneLoginActivity.this, "Verification code sent", Toast.LENGTH_SHORT).show();
                 sendCodeButton.setVisibility(View.INVISIBLE);
                 inputPhoneNumber.setVisibility(View.INVISIBLE);
@@ -129,7 +127,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            loadingbar.dismiss();
+                            loadingBar.dismiss();
                             Toast.makeText(PhoneLoginActivity.this, "Yoy are logged in successfully", Toast.LENGTH_SHORT).show();
                             sendUserToMainActivity();
                         }

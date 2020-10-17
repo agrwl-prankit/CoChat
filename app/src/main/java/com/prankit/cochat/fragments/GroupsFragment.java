@@ -1,9 +1,11 @@
 package com.prankit.cochat.fragments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -82,7 +85,16 @@ public class GroupsFragment extends Fragment {
 
         dbReference = FirebaseDatabase.getInstance().getReference().child("Groups");
         listView = (ListView) groupFragmentView.findViewById(R.id.groupListView);
-        arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, listOfGroups);
+        arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, listOfGroups){
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView textView = view.findViewById(android.R.id.text1);
+                textView.setTextColor(Color.WHITE);
+                return view;
+            }
+        };
         listView.setAdapter(arrayAdapter);
 
         retrieveAndDisplayGroups();

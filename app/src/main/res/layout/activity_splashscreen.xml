@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
+    android:background="@drawable/cback"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.splashscreen">
@@ -19,12 +19,13 @@
 
         <ImageView
             android:id="@+id/splashImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="fitCenter"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:contentDescription="@string/todo"
+            android:scaleType="centerCrop"
+            android:layout_gravity="center"
             android:transitionName="logo_image"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/chatlogo" />
 
         <TextView
             android:id="@+id/splashTextView"
@@ -34,7 +35,7 @@
             android:fontFamily="@font/vast_shadow"
             android:layout_gravity="center"
             android:text="@string/cochat"
-            android:textColor="#0C0C0C"
+            android:textColor="#3899B3"
             android:textSize="60sp"
             android:transitionName="logo_text"
             tools:ignore="UnknownId" />

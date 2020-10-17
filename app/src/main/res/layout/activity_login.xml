@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
+    android:background="@drawable/cback"
     tools:context=".activities.LoginActivity">
 
         <LinearLayout
@@ -16,6 +16,13 @@
             android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/chatlogo"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"/>
+
             <EditText
                 android:id="@+id/loginEmailEditText"
                 android:layout_width="match_parent"
@@ -23,7 +30,8 @@
                 android:hint="  Email..."
                 android:textAlignment="center"
                 android:inputType="textEmailAddress"
-                android:layout_marginTop="25dp"
+                android:textColor="@android:color/background_light"
+                android:layout_marginTop="10dp"
                 android:drawableStart="@drawable/icon_email"
                 android:autofillHints=""
                 android:drawableLeft="@drawable/icon_email"
@@ -38,6 +46,7 @@
                 android:hint="  Password..."
                 android:textAlignment="center"
                 android:inputType="textPassword"
+                android:textColor="@android:color/background_light"
                 android:layout_marginTop="10dp"
                 android:drawableStart="@drawable/icon_password"
                 android:autofillHints=""
@@ -55,14 +64,14 @@
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:layout_gravity="center"
-                android:textColor="#5C23AD"/>
+                android:textColor="#3898B2"/>
 
             <Button
                 android:id="@+id/loginButton"
                 android:text="Log In"
                 android:textAllCaps="false"
                 android:textSize="24sp"
-                android:textColor="#F3F0F2"
+                android:textColor="#050A1A"
                 android:background="@drawable/stylerounded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,7 +83,7 @@
                 android:text="Sign Up"
                 android:textAllCaps="false"
                 android:textSize="24sp"
-                android:textColor="#F3F0F2"
+                android:textColor="#050A1A"
                 android:background="@drawable/stylerounded"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,7 +100,7 @@
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:layout_gravity="center"
-                android:textColor="#5C23AD"/>
+                android:textColor="#3898B2"/>
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/phoneLoginButton"

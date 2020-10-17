@@ -38,6 +38,8 @@ public class ChatFragment extends Fragment {
 
     private RecyclerView chatList;
     private DatabaseReference chatRef, userRef;
+    private  FirebaseAuth mAuth;
+    private String currentUserId;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,20 +89,20 @@ public class ChatFragment extends Fragment {
 
         chatList = chatView.findViewById(R.id.chatList);
         chatList.setLayoutManager(new LinearLayoutManager(getContext()));
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        String currentUserId = mAuth.getUid();
-        chatRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserId);
+        mAuth = FirebaseAuth.getInstance();
+        currentUserId = mAuth.getUid();
+        chatRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         return chatView;
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
 
         FirebaseRecyclerOptions<Contact> options = new FirebaseRecyclerOptions.Builder<Contact>()
-                .setQuery(chatRef, Contact.class)
+                .setQuery(chatRef.child(currentUserId), Contact.class)
                 .build();
 
         FirebaseRecyclerAdapter<Contact, ChatViewHolder> adapter = new FirebaseRecyclerAdapter<Contact, ChatViewHolder>(options) {

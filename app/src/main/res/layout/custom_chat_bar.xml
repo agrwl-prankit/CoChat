@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/colorPrimary"
+    android:background="#0D193D"
     android:orientation="horizontal">
 
     <de.hdodenhof.circleimageview.CircleImageView

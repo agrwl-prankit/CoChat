@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
+    android:background="@drawable/cback"
     tools:context=".activities.RegisterActivity">
 
     <LinearLayout
@@ -15,6 +15,13 @@
         android:layout_marginRight="19dp"
         android:layout_marginLeft="19dp"
         android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/chatlogo"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"/>
 
         <EditText
             android:id="@+id/registerEmailEditText"
@@ -50,7 +57,7 @@
             android:text="@string/create_account"
             android:textAllCaps="false"
             android:textSize="24sp"
-            android:textColor="@android:color/background_light"
+            android:textColor="#0D193D"
             android:background="@drawable/stylerounded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,7 +74,7 @@
             android:layout_marginTop="20dp"
             android:textAlignment="center"
             android:textSize="20sp"
-            android:textColor="#5C23AD"
+            android:textColor="#3898B2"
             android:gravity="center_horizontal">
         </TextView>
 

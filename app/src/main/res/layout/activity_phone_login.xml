@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back"
+    android:background="@drawable/cback"
     tools:context=".activities.PhoneLoginActivity">
 
     <LinearLayout
@@ -17,11 +17,19 @@
         android:layout_centerVertical="true"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/chatlogo"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"/>
+
         <EditText
             android:id="@+id/phoneNumberEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Phone number with country code"
+            android:textColor="@android:color/background_light"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:textAlignment="center"
@@ -34,6 +42,7 @@
             android:layout_marginTop="4dp"
             android:layout_below="@id/sendCodeButton"
             android:hint="Verification code"
+            android:textColor="@android:color/background_light"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:textAlignment="center"
@@ -47,7 +56,7 @@
             android:text="Send Verification code"
             android:textAllCaps="false"
             android:textSize="24sp"
-            android:textColor="#F3F0F2"
+            android:textColor="#0D193D"
             android:background="@drawable/stylerounded"
             android:layout_marginTop="10dp"
             android:layout_below="@id/phoneNumberEditText"
@@ -60,7 +69,7 @@
             android:text="Verify"
             android:textAllCaps="false"
             android:textSize="24sp"
-            android:textColor="#F3F0F2"
+            android:textColor="#0D193D"
             android:background="@drawable/stylerounded"
             android:layout_marginTop="10dp"
             android:layout_below="@id/verificationCodeEditText"

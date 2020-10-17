@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/cback"
     tools:context=".activities.SettingsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/settingToolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="#0D193D"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -33,7 +34,7 @@
         android:hint="@string/username"
         android:textAlignment="center"
         android:gravity="center_horizontal"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@android:color/background_light"
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_marginStart="15dp"
@@ -51,7 +52,7 @@
         android:hint="@string/status"
         android:textAlignment="center"
         android:gravity="center_horizontal"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@android:color/background_light"
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_marginStart="15dp"
@@ -65,8 +66,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/setStatus"
-        android:textColor="@android:color/background_light"
-        android:background="@color/colorPrimaryDark"
+        android:textColor="#0D193D"
+        android:background="@drawable/stylerounded"
         android:text="@string/update"
         android:textAllCaps="false"
         android:textAlignment="center"
