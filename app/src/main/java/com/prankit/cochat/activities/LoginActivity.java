@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.prankit.cochat.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText emailEditText, passwordEditText;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog loadingBar;
+    private DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // initialize fields and instances
         firebaseAuth = FirebaseAuth.getInstance();
-
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         loadingBar = new ProgressDialog(this);
         Button loginButton = findViewById(R.id.loginButton);
         CircleImageView phoneLoginButton = findViewById(R.id.phoneLoginButton);
@@ -102,8 +104,18 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                sendUserToMainActivity();
-                                Toast.makeText(LoginActivity.this, "Logged in successful", Toast.LENGTH_SHORT).show();
+                                String currentUserId = firebaseAuth.getCurrentUser().getUid();
+                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
+                                userRef.child(currentUserId).child("device_token").setValue(deviceToken)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()){
+                                                    sendUserToMainActivity();
+                                                    Toast.makeText(LoginActivity.this, "Logged in successful", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
                             }
                             else {
                                 new AlertDialog.Builder(LoginActivity.this)

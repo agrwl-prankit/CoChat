@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.prankit.cochat.R;
 
+import java.util.HashMap;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -28,7 +30,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private TextView visitUserName, visitUserStatus;
     private CircleImageView visitUserProfileImage;
     private Button sendMessageRequestButton, declineMessageRequestButton;
-    private DatabaseReference userRef, chatRequestRef, contactsRef;
+    private DatabaseReference userRef, chatRequestRef, contactsRef, notificationRef;
     private FirebaseAuth mAuth;
 
     @Override
@@ -51,6 +53,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         chatRequestRef = FirebaseDatabase.getInstance().getReference().child("Chat Request");
         contactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+        notificationRef = FirebaseDatabase.getInstance().getReference().child("Notifications");
         mAuth = FirebaseAuth.getInstance();
         senderUserId = mAuth.getCurrentUser().getUid();
         currentState = "new";
@@ -255,9 +258,21 @@ public class UserProfileActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
-                                sendMessageRequestButton.setEnabled(true);
-                                currentState = "request_sent";
-                                sendMessageRequestButton.setText("Cancel Friend Request");
+                                HashMap<String, String> chatNotificationHashMap = new HashMap<>();
+                                chatNotificationHashMap.put("from", senderUserId);
+                                chatNotificationHashMap.put("type", "request");
+
+                                notificationRef.child(recieveUserId).push().setValue(chatNotificationHashMap)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()){
+                                                    sendMessageRequestButton.setEnabled(true);
+                                                    currentState = "request_sent";
+                                                    sendMessageRequestButton.setText("Cancel Friend Request");
+                                                }
+                                            }
+                                        });
                             }
                         }
                     });
