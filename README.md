@@ -20,5 +20,5 @@ A login based messaging application to connect people through friend requests.
 * Users last seen
 * Private group chat
 
-## Google Drive Link
-### https://drive.google.com/drive/u/0/folders/1sQ4H6bFeGJzB_hSY5gc-rQHm3GiUrALV
+## apk
+### https://drive.google.com/file/d/1ZBRfB3ikjcy80I8Mx_q3fyf7Qcq7jwtx/view?usp=drivesdk
