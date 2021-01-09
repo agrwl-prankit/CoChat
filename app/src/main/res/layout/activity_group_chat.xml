@@ -47,9 +47,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Enter the message here..."
+            android:textColorHint="@android:color/background_light"
             android:padding="17dp"
             android:layout_weight="1"
             android:inputType="textMultiLine"
+            android:textColor="@android:color/background_light"
             android:layout_alignParentLeft="true"
             />
 

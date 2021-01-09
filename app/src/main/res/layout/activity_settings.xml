@@ -78,4 +78,25 @@
         android:padding="6dp"
         android:layout_marginTop="10dp"/>
 
+    <TextView
+        android:id="@+id/t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/updateSettingButton"
+        android:textColor="@android:color/background_light"
+        android:textSize="25sp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:text="Design and Developed by"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/t1"
+        android:textColor="@android:color/background_light"
+        android:textSize="25sp"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true"
+        android:text="Prankit Agarwal"/>
+
 </RelativeLayout>
