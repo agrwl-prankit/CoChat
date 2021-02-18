@@ -83,6 +83,6 @@
         android:textColor="#0D193D"
         android:layout_marginLeft="65dp"
         android:layout_marginRight="65dp"
-        android:visibility="visible"/>
+        android:visibility="invisible"/>
 
 </RelativeLayout>

@@ -133,6 +133,16 @@ public class ContactsFragment extends Fragment {
                         else {
                             Toast.makeText(getContext(), "No contact is available.", Toast.LENGTH_SHORT).show();
                         }
+
+                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String visitUserId = getRef(position).getKey();
+                                Intent profileIntent = new Intent(getContext(), UserProfileActivity.class);
+                                profileIntent.putExtra("visituserId", visitUserId);
+                                startActivity(profileIntent);
+                            }
+                        });
                     }
 
                     @Override
