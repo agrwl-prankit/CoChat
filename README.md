@@ -2,6 +2,11 @@
 A login based messaging application to connect people through friend requests.
 
 ## Features
+
+### Login
+* Email-password
+* Phone number 
+
 ### Messaging
 * Send and Receive messages
 
@@ -22,3 +27,6 @@ A login based messaging application to connect people through friend requests.
 
 ## apk
 https://drive.google.com/file/d/1ZBRfB3ikjcy80I8Mx_q3fyf7Qcq7jwtx/view?usp=drivesdk
+
+## Docs
+https://drive.google.com/drive/folders/1sQ4H6bFeGJzB_hSY5gc-rQHm3GiUrALV
