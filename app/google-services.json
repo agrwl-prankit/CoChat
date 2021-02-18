@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "305652647988-b1lln0u2tj7lcv9eifr6j923vbppi9kj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.client",
+            "certificate_hash": "b9f55df8a80db06a2bf2ffa73554867e8622bf94"
+          }
+        },
+        {
           "client_id": "305652647988-e04kbltd61mo8p6572btq2p7e5i3q4jg.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -44,6 +52,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "305652647988-fsmv29bdj03lg7dsoj97ormngoarvtvr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.prankit.cochat",
+            "certificate_hash": "b878524c096ee7d35c7efea4997992c095dee54a"
+          }
+        },
+        {
           "client_id": "305652647988-ldaai3amarla64l7bol4d057asmi1pr6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -52,11 +68,11 @@
           }
         },
         {
-          "client_id": "305652647988-fsmv29bdj03lg7dsoj97ormngoarvtvr.apps.googleusercontent.com",
+          "client_id": "305652647988-mkq69q54lq1bn38lbe78i4gl46uo35to.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.prankit.cochat",
-            "certificate_hash": "b878524c096ee7d35c7efea4997992c095dee54a"
+            "certificate_hash": "b9f55df8a80db06a2bf2ffa73554867e8622bf94"
           }
         },
         {

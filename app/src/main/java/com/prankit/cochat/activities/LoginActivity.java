@@ -134,7 +134,6 @@ public class LoginActivity extends AppCompatActivity {
     private void sendUserToPhoneLoginActivity() {
         Intent phoneLoginIntent = new Intent(LoginActivity.this, PhoneLoginActivity.class);
         startActivity(phoneLoginIntent);
-        finish();
     }
 
     //  send user to main activity
@@ -149,12 +148,10 @@ public class LoginActivity extends AppCompatActivity {
     public void sendUserToRegisterActivity(){
         Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registerIntent);
-        finish();
     }
 
     private void sendUserToForgetPasswordActivity() {
         Intent forgetIntent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
         startActivity(forgetIntent);
-        finish();
     }
 }
