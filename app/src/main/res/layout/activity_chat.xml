@@ -6,14 +6,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ChatActivity"
-    android:background="@drawable/cback">
+    android:background="#D2E388">
 
-    <androidx.appcompat.widget.Toolbar
+    <LinearLayout
         android:id="@+id/chatToolBar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#0D193D"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        android:layout_height="70dp"
+        android:layout_weight="1"
+        android:background="#4B378E"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/backChat"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/icon_arrow_back"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10sp"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/chatUserImage"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/profileimage"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:id="@+id/chatUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="User Name"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="29sp" />
+
+            <TextView
+                android:id="@+id/chatUserLastSeen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="User Seen"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatMessageRecyclerList"
@@ -36,8 +87,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Enter the message here..."
-            android:textColor="@android:color/background_light"
-            android:textColorHint="@android:color/background_light"
+            android:textColor="#4B378E"
+            android:textColorHint="#A72C5A"
             android:padding="17dp"
             android:layout_weight="1"
             android:inputType="textMultiLine"
@@ -46,8 +97,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#15363F">
+            android:layout_height="wrap_content">
 
             <ImageButton
                 android:id="@+id/sendChatMessageButton"

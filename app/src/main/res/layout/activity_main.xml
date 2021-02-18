@@ -18,10 +18,10 @@
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@drawable/cback"
+        android:background="#D2E388"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:itemTextColor="@android:color/background_light"
+        android:textColor="#4B378E"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>

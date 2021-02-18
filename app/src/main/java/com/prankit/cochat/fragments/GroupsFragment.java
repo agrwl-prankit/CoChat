@@ -91,7 +91,7 @@ public class GroupsFragment extends Fragment {
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView textView = view.findViewById(android.R.id.text1);
-                textView.setTextColor(Color.WHITE);
+                textView.setTextColor(Color.BLUE);
                 return view;
             }
         };

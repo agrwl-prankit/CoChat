@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cback"
+    android:background="#D2E388"
     tools:context=".activities.SettingsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/settingToolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#0D193D"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        android:background="#4B378E"
+        app:titleTextColor="#D2E388" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileImage"
@@ -32,9 +32,10 @@
         android:layout_below="@id/profileImage"
         android:inputType="textMultiLine"
         android:hint="@string/username"
+        android:textColorHint="#A72C5A"
         android:textAlignment="center"
         android:gravity="center_horizontal"
-        android:textColor="@android:color/background_light"
+        android:textColor="#4B378E"
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_marginStart="15dp"
@@ -50,9 +51,10 @@
         android:layout_below="@id/setUserName"
         android:inputType="textMultiLine"
         android:hint="@string/status"
+        android:textColorHint="#A72C5A"
         android:textAlignment="center"
         android:gravity="center_horizontal"
-        android:textColor="@android:color/background_light"
+        android:textColor="#4B378E"
         android:textStyle="bold"
         android:textSize="25sp"
         android:layout_marginStart="15dp"
@@ -101,4 +103,12 @@
         android:text="Prankit Agarwal"/>
         -->
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="58dp"
+        android:src="@drawable/digital_india"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitEnd"/>
 </RelativeLayout>

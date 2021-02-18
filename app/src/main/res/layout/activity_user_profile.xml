@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cback"
+    android:background="#D2E388"
     tools:context=".activities.UserProfileActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/userProfileToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#0D193D"
+        android:background="#4B378E"
+        app:titleTextColor="#D2E388"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -33,7 +34,7 @@
         android:layout_marginRight="15dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@android:color/background_light"
+        android:textColor="#4B378E"
         android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:gravity="center_horizontal"
@@ -48,7 +49,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:textSize="25sp"
-        android:textColor="@android:color/background_light"
+        android:textColor="#4B378E"
         android:layout_marginTop="25dp"
         android:textAlignment="center"
         android:gravity="center_horizontal"

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,18 +56,10 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        Toolbar chatToolBar = findViewById(R.id.chatToolBar);
-        setSupportActionBar(chatToolBar);
-        getSupportActionBar().setTitle("");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View actionBarView = layoutInflater.inflate(R.layout.custom_chat_bar, null);
-        getSupportActionBar().setCustomView(actionBarView);
-
         messageReceiverId = getIntent().getExtras().get("chatUserId").toString();
         messageReceiverName = getIntent().getExtras().get("chatUserName").toString();
         messageRecieverImage = getIntent().getExtras().get("chatUserImage").toString();
+        ImageView backBtn = findViewById(R.id.backChat);
         userName = findViewById(R.id.chatUserName);
         userLastSeen = findViewById(R.id.chatUserLastSeen);
         CircleImageView userImage = findViewById(R.id.chatUserImage);
@@ -88,6 +81,13 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendMessage();
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

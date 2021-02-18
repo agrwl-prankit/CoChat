@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cback"
+    android:background="#D2E388"
     tools:context=".activities.GroupChatActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/groupChatToolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#0D193D"
+        android:background="#4B378E"
+        app:titleTextColor="#D2E388"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <ScrollView
@@ -47,11 +48,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Enter the message here..."
-            android:textColorHint="@android:color/background_light"
+            android:textColorHint="#A72C5A"
             android:padding="17dp"
             android:layout_weight="1"
             android:inputType="textMultiLine"
-            android:textColor="@android:color/background_light"
+            android:textColor="#4B378E"
             android:layout_alignParentLeft="true"
             />
 

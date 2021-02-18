@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cback"
+    android:background="#D2E388"
     tools:context=".activities.PhoneLoginActivity">
 
     <LinearLayout
@@ -28,8 +28,9 @@
             android:id="@+id/phoneNumberEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="#A72C5A"
             android:hint="Phone number with country code"
-            android:textColor="@android:color/background_light"
+            android:textColor="#4B378E"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:textAlignment="center"
@@ -42,7 +43,8 @@
             android:layout_marginTop="4dp"
             android:layout_below="@id/sendCodeButton"
             android:hint="Verification code"
-            android:textColor="@android:color/background_light"
+            android:textColorHint="#A72C5A"
+            android:textColor="#4B378E"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:textAlignment="center"

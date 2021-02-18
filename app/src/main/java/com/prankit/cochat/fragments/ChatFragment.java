@@ -121,7 +121,8 @@ public class ChatFragment extends Fragment {
                             }
                             final String profileName = snapshot.child("name").getValue().toString();
                             holder.userName.setText(profileName);
-                            holder.userStatus.setText("Last seen: " + "\n" + "Date " + "Time ");
+                            holder.userStatus.setVisibility(View.INVISIBLE);
+                            //holder.userStatus.setText("Last seen: " + "\n" + "Date " + "Time ");
 
                             holder.itemView.setOnClickListener(new View.OnClickListener() {
                                 @Override

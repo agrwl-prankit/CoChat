@@ -3,10 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cback"
+    android:background="#D2E388"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.splashscreen">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/digital_india"
+        android:scaleType="fitXY"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +41,7 @@
             android:fontFamily="@font/vast_shadow"
             android:layout_gravity="center"
             android:text="@string/cochat"
-            android:textColor="#3899B3"
+            android:textColor="#4B378E "
             android:textSize="60sp"
             android:transitionName="logo_text"
             tools:ignore="UnknownId" />
