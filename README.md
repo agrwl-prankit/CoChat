@@ -26,7 +26,7 @@ A login based messaging application to connect people through friend requests.
 * Private group chat
 
 ## apk
-https://drive.google.com/file/d/1AK3CTRJTfyj5F6r-CrXsVftiszt1HP0f/view?usp=sharing
+https://drive.google.com/file/d/1Y7FnYaJVbUCDSQPwX2bjPAvDJ1Wmn_kl/view?usp=sharing
 
 ## Docs
 https://drive.google.com/drive/folders/1sQ4H6bFeGJzB_hSY5gc-rQHm3GiUrALV
