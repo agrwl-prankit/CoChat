@@ -5,6 +5,7 @@
     <item
         android:title="Create Group"
         android:id="@+id/createGroupOption"
+        android:visible="false"
         app:showAsAction="never"/>
 
     <item

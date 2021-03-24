@@ -12,6 +12,7 @@
             android:title="Personal Chat" />
         <item
             android:id="@+id/nav_groups"
+            android:visible="false"
             android:title="Group Chat" />
     </group>
 

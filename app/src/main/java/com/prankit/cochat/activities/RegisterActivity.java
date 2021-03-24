@@ -61,8 +61,8 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void createNewAccount(){
-        String email = emailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+        final String email = emailEditText.getText().toString();
+        final String password = passwordEditText.getText().toString();
         //  check whether users enters email and password or not
         if (email.equals(""))
             Toast.makeText(this, "Please enter email...", Toast.LENGTH_SHORT).show();
@@ -81,11 +81,11 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                String deviceToken = FirebaseInstanceId.getInstance().getToken();
                                 String currentUserId = firebaseAuth.getCurrentUser().getUid();
                                 //  add value of current user id to firebase database also
                                 dbReferences.child("Users").child(currentUserId).setValue("");
-                                dbReferences.child("Users").child(currentUserId).child("device_token").setValue(deviceToken);
+                                dbReferences.child("Users").child(currentUserId).child("email").setValue(email);
+                                dbReferences.child("Users").child(currentUserId).child("password").setValue(password);
                                 Toast.makeText(RegisterActivity.this, "Account created successfully...", Toast.LENGTH_SHORT).show();
                                 sendUserToMainActivity();
                             }
