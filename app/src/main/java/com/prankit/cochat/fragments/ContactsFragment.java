@@ -1,5 +1,6 @@
 package com.prankit.cochat.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -30,11 +31,6 @@ import com.prankit.cochat.model.Contact;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ContactsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ContactsFragment extends Fragment {
 
     private View contactsView;
@@ -42,45 +38,10 @@ public class ContactsFragment extends Fragment {
     private DatabaseReference contactsRef, userRef;
     private FirebaseAuth mAuth;
     private String currentUserId;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ProgressDialog loadingBar;
 
     public ContactsFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ContactsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ContactsFragment newInstance(String param1, String param2) {
-        ContactsFragment fragment = new ContactsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -95,6 +56,7 @@ public class ContactsFragment extends Fragment {
         currentUserId = mAuth.getCurrentUser().getUid();
         contactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserId);
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        loadingBar = new ProgressDialog(getActivity());
 
         return contactsView;
     }
@@ -102,6 +64,11 @@ public class ContactsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        loadingBar.setTitle("Retrieving Contacts");
+        loadingBar.setMessage("Please wait...");
+        loadingBar.setCanceledOnTouchOutside(true);
+        loadingBar.show();
 
         FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<Contact>()
                 .setQuery(contactsRef, Contact.class)
@@ -162,6 +129,7 @@ public class ContactsFragment extends Fragment {
         };
         contactsListView.setAdapter(adapter);
         adapter.startListening();
+        loadingBar.dismiss();
     }
 
     public static class ContactsViewHolder extends RecyclerView.ViewHolder{
