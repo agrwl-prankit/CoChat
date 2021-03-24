@@ -67,7 +67,7 @@ public class ChatActivity extends AppCompatActivity {
         Glide.with(this).load(messageRecieverImage).placeholder(R.drawable.profileimage).into(userImage);
 
         inputMessage = findViewById(R.id.inputChatMessage);
-        ImageButton sendButton = findViewById(R.id.sendChatMessageButton);
+        ImageView sendButton = findViewById(R.id.sendChatMessageButton);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         messageSenderId = mAuth.getCurrentUser().getUid();
         rootRef = FirebaseDatabase.getInstance().getReference();
@@ -160,5 +160,17 @@ public class ChatActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finish();
     }
 }

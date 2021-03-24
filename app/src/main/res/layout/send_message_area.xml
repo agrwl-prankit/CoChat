@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="3"
+    android:background="#D2E388"
+    android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/inputChatMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:hint="Write a message"
+        android:textColor="#000"
+        android:layout_marginLeft="5dp"
+        android:layout_weight="2.7"
+        android:textColorHint="#000" />
+
+    <ImageView
+        android:id="@+id/sendChatMessageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.3"
+        android:src="@drawable/send_button_image" />
+
+</LinearLayout>
+
+
+
